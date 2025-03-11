@@ -180,7 +180,7 @@ def pos_neg_list(df, neg_sponsor, pos_sponsor, Seg_Col,Metric_Col,Date_Col,start
 
 
 # Load Data
-data = pd.read_csv(r"C:\P360 Product\AI Insights\UniqueHCPDigitalData.csv")
+data = pd.read_csv(r"UniqueHCPDigitalData.csv")
 
 date_columns = [col for col in data.columns if pd.api.types.is_datetime64_any_dtype(data[col])]
 
