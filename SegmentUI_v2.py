@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import json
-from openai import OpenAI
+import openai
 #from variables import categorize_columns
 import numpy as np
 import anthropic
@@ -13,7 +13,8 @@ load_dotenv()
 
 api_key = os.getenv("OPENAI_API_KEY")
 
-client = anthropic.Anthropic(api_key=api_key)
+# client = anthropic.Anthropic(api_key=api_key)
+# client=OpenAI
 
 
 
@@ -179,7 +180,7 @@ def pos_neg_list(df, neg_sponsor, pos_sponsor, Seg_Col,Metric_Col,Date_Col,start
 
 
 # Load Data
-data = pd.read_csv(r"UniqueHCPDigitalData.csv")
+data = pd.read_csv(r"C:\P360 Product\AI Insights\UniqueHCPDigitalData.csv")
 
 date_columns = [col for col in data.columns if pd.api.types.is_datetime64_any_dtype(data[col])]
 
@@ -437,34 +438,41 @@ if top_contributors_pos and top_contributors_neg:
 
     Below is a DataFrame:
 
-    ### DataFrame:
+    DataFrame:
     {contrib_df_melted}
 
-    Summarize each category with bullet points, ensuring each summary is exactly one line. 
-    Only include categories where the percentage change is greater than 30%. 
-    
-    The summary should include:
-    - The category name.
-    - The contributor's value described in words.
-    - The percentage change shoud be written in number with bold letters.
-    - The impact on the total count, stating whether it is increasing or decreasing.
+    Summarize each category with bullet points, ensuring each summary is exactly one line.
+    Only include categories where the absolute percentage change (positive or negative) exceeds 30%.
 
-    Return only the summary in bullets points.
+    If comparison data is missing for any category, mention that percentage change cannot be computed due to insufficient data.
+
+    The summary should follow this format:
+
+    [Category]: [Description of contributor's value] – [+/-XX%] – Impact on total count ([Increasing/Decreasing])
+    If the initial value is zero or near zero, state that percentage change is not computable or is infinite.
+
+    Return only the summary in bullet points.
     """
-    response = client.chat.completions.create(
-       model="gpt-4-turbo",
-       messages=[{"role": "system", "content": "You are a data analysis assistant."},
-                   {"role": "user", "content": prompt}]
-    )
     
-    conversation = [{"role": "user", "content": prompt}]
-    response = client.messages.create(
-                    model='claude-3-5-sonnet-20241022',
-                    messages=conversation,
-                    max_tokens=5000
-                )
-
-    lines = response.content[0].text.split('\n')
+    response = openai.chat.completions.create(
+        model="gpt-4",
+        messages=[{"role": "system", "content": "You are an expert Data Analyst."},
+                  {"role": "user", "content": prompt}]
+    )
+    # response = client.chat.completions.create(
+    #    model="gpt-4-turbo",
+    #    messages=[{"role": "system", "content": "You are a data analysis assistant."},
+    #                {"role": "user", "content": prompt}]
+    # )
+    
+    # conversation = [{"role": "user", "content": prompt}]
+    # response = client.messages.create(
+    #                 model='claude-3-5-sonnet-20241022',
+    #                 messages=conversation,
+    #                 max_tokens=5000
+    #             )
+    #st.write(response)
+    lines = response.choices[0].message.content.split('\n')
     for line in lines:
         if line != "":
             st.write(line.strip())
