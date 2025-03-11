@@ -448,9 +448,7 @@ if top_contributors_pos and top_contributors_neg:
     The summary should follow this format:
 
     [Category]: [Description of contributor's value] – [+/-XX%] – Impact on total count ([Increasing/Decreasing])
-    If the initial value is zero or near zero, state that percentage change is not computable or is infinite.
-
-    Return only the summary in bullet points. No Additional explanation or details are required.
+    Return only the summary in bullet points with No Additional explanation or details are required.
     """
     
     response = openai.chat.completions.create(
