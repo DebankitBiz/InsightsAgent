@@ -451,7 +451,7 @@ if top_contributors_pos and top_contributors_neg:
     [Category]: [Description of contributor's value] – [+/-XX%] – Impact on total count ([Increasing/Decreasing])
     If the initial value is zero or near zero, state that percentage change is not computable or is infinite.
 
-    Return only the summary in bullet points.
+    Return only the summary in bullet points. No Additional explanation or details are required.
     """
     
     response = openai.chat.completions.create(
