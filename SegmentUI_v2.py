@@ -432,23 +432,25 @@ if top_contributors_pos and top_contributors_neg:
 
         
 if top_contributors_pos and top_contributors_neg:
+    data_str = contrib_df_melted.to_string()
     prompt = f"""
     You are an expert data analyst.
 
     Below is a DataFrame:
 
-    DataFrame:
-    {contrib_df_melted.to_string()}
+    ### DataFrame:
+    {data_str}
 
-    Summarize each category with bullet points, ensuring each summary is exactly one line.
-    Only include categories where the absolute percentage change (positive or negative) exceeds 30%.
+    Summarize each category with bullet points, ensuring each summary is exactly one line.  
+    Only include categories where the absolute percentage change (positive or negative) exceeds **30%**.  
 
-    If comparison data is missing for any category, mention that percentage change cannot be computed due to insufficient data.
+    - If comparison data is missing for any category, mention that percentage change cannot be computed due to insufficient data.  
+    - If the initial value is zero or near zero, state that the percentage change is not computable or is infinite.  
 
-    The summary should follow this format:
+    **Format:**  
+    - **[Category]**: [Description of contributor's value] – **[+/-XX%]** – Impact on total count ([Increasing/Decreasing])  
 
-    [Category]: [Description of contributor's value] – [+/-XX%] – Impact on total count ([Increasing/Decreasing])
-    Return only the summary in bullet points with No Additional explanation or details are required.
+    Return only the summary in bullet points with no additional explanation or details.
     """
     
     response = openai.chat.completions.create(
