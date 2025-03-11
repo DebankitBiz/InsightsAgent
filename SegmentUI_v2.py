@@ -433,7 +433,6 @@ if top_contributors_pos and top_contributors_neg:
         
 if top_contributors_pos and top_contributors_neg:
     prompt = f"""
-
     You are an expert data analyst.
 
     Below is a DataFrame:
