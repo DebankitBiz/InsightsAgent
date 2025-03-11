@@ -8,8 +8,11 @@ from variables import categorize_columns
 import numpy as np
 import anthropic
 import re
+from dotenv import load_dotenv
+load_dotenv()
 
-api_key = "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"
+api_key = os.getenv("OPENAI_API_KEY")
+
 client = anthropic.Anthropic(api_key=api_key)
 
 
