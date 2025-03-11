@@ -438,7 +438,7 @@ if top_contributors_pos and top_contributors_neg:
     Below is a DataFrame:
 
     DataFrame:
-    {contrib_df_melted}
+    {contrib_df_melted.to_string()}
 
     Summarize each category with bullet points, ensuring each summary is exactly one line.
     Only include categories where the absolute percentage change (positive or negative) exceeds 30%.
