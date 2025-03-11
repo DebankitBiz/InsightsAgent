@@ -1,0 +1,9 @@
+numpy
+matplotlib
+pandas
+prophet
+scikit-learn
+streamlit
+openpyxl
+plotly
+anthropic
