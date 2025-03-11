@@ -4,7 +4,7 @@ import pandas as pd
 import plotly.express as px
 import json
 from openai import OpenAI
-from variables import categorize_columns
+#from variables import categorize_columns
 import numpy as np
 import anthropic
 import re
