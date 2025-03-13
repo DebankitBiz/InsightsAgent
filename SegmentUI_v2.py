@@ -205,7 +205,7 @@ col1, col2, col3, col4 = st.columns([1, 1,1,1])  # Two columns for Segment & Met
 
 with col1:
     st.markdown("**Segment**")  
-    segment_col = st.selectbox("", options=data.select_dtypes(include=["object"]).columns, key="segment")
+    segment_col = st.selectbox("", options=['Customer_ID'], key="segment")
 
 with col2:
     st.markdown("**Metric**")
