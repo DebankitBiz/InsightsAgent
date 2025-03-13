@@ -11,9 +11,9 @@ import re
 from dotenv import load_dotenv
 load_dotenv()
 
-api_key = os.getenv("OPENAI_API_KEY")
+#api_key = os.getenv("OPENAI_API_KEY")
 
-# client = anthropic.Anthropic(api_key=api_key)
+client = anthropic.Anthropic(api_key=api_key)
 # client=OpenAI
 
 
@@ -464,12 +464,12 @@ if top_contributors_pos and top_contributors_neg:
     #                {"role": "user", "content": prompt}]
     # )
     
-    # conversation = [{"role": "user", "content": prompt}]
-    # response = client.messages.create(
-    #                 model='claude-3-5-sonnet-20241022',
-    #                 messages=conversation,
-    #                 max_tokens=5000
-    #             )
+    conversation = [{"role": "user", "content": prompt}]
+    response = client.messages.create(
+                    model='claude-3-5-sonnet-20241022',
+                    messages=conversation,
+                    max_tokens=5000
+             )
     #st.write(response)
     lines = response.choices[0].message.content.split('\n')
     for line in lines:
