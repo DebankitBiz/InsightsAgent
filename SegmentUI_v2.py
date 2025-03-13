@@ -11,7 +11,7 @@ import re
 from dotenv import load_dotenv
 load_dotenv()
 
-#api_key = os.getenv("OPENAI_API_KEY")
+api_key = os.getenv("OPENAI_API_KEY")
 
 client = anthropic.Anthropic(api_key=api_key)
 # client=OpenAI
