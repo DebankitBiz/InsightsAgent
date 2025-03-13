@@ -11,7 +11,7 @@ import re
 from dotenv import load_dotenv
 load_dotenv()
 
-api_key = os.getenv("OPENAI_API_KEY")
+api_key = os.getenv("CLAUDE_API_KEY")
 
 client = anthropic.Anthropic(api_key=api_key)
 # client=OpenAI
@@ -453,11 +453,11 @@ if top_contributors_pos and top_contributors_neg:
     Return only the summary in bullet points with no additional explanation or details.
     """
     
-    response = openai.chat.completions.create(
-        model="gpt-4",
-        messages=[{"role": "system", "content": "You are an expert Data Analyst."},
-                  {"role": "user", "content": prompt}]
-    )
+    # response = openai.chat.completions.create(
+    #     model="gpt-4",
+    #     messages=[{"role": "system", "content": "You are an expert Data Analyst."},
+    #               {"role": "user", "content": prompt}]
+    # )
     # response = client.chat.completions.create(
     #    model="gpt-4-turbo",
     #    messages=[{"role": "system", "content": "You are a data analysis assistant."},
@@ -470,8 +470,14 @@ if top_contributors_pos and top_contributors_neg:
                     messages=conversation,
                     max_tokens=5000
              )
-    #st.write(response)
-    lines = response.choices[0].message.content.split('\n')
+    # Convert response to dictionary
+    response_dict = response.to_dict()
+
+    # Pretty-print the JSON response
+    #st.write(json.dumps(response_dict, indent=4))
+
+    # Extract and display content
+    lines = response_dict['content'][0]['text'].split('\n')
     for line in lines:
-        if line != "":
+        if line.strip():
             st.write(line.strip())
