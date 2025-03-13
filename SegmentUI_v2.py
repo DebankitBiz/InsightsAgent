@@ -428,7 +428,21 @@ if top_contributors_pos and top_contributors_neg:
     
     #with col2:
         #st.dataframe(metric_change_df)
-    
+def get_response_with_retry(prompt, retries=3, delay=1):
+    for i in range(retries):
+        try:
+            conversation = [{"role": "user", "content": prompt}]
+            response = client.messages.create(
+                    model='claude-3-5-sonnet-20241022',
+                    messages=conversation,
+                    max_tokens=5000
+             )
+            return response
+        except anthropic.OverloadedError:
+            if i < retries - 1:
+                time.sleep(delay)
+            else:
+                raise    
 
         
 if top_contributors_pos and top_contributors_neg:
@@ -464,12 +478,7 @@ if top_contributors_pos and top_contributors_neg:
     #                {"role": "user", "content": prompt}]
     # )
     
-    conversation = [{"role": "user", "content": prompt}]
-    response = client.messages.create(
-                    model='claude-3-5-sonnet-20241022',
-                    messages=conversation,
-                    max_tokens=5000
-             )
+    response=get_response_with_retry(prompt)
     # Convert response to dictionary
     response_dict = response.to_dict()
 
