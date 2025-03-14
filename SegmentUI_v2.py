@@ -375,7 +375,7 @@ if top_contributors_pos and top_contributors_neg:
     #st.dataframe(filtered_df)
     ## Plot if data exists
     
-   if not metric_change_df.empty:
+    if not metric_change_df.empty:
         fig = px.scatter(
             metric_change_df, 
             x=metric_col+"_Change_%", 
