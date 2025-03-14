@@ -375,7 +375,7 @@ if top_contributors_pos and top_contributors_neg:
     #st.dataframe(filtered_df)
     ## Plot if data exists
     
-    if not metric_change_df.empty:
+   if not metric_change_df.empty:
         fig = px.scatter(
             metric_change_df, 
             x=metric_col+"_Change_%", 
@@ -397,6 +397,10 @@ if top_contributors_pos and top_contributors_neg:
                 zeroline=True, 
                 zerolinecolor='black',
                 range=[min(0, min_x), max_x]  # Ensures 0 is included unless all values are positive
+            ),
+            yaxis=dict(
+                showticklabels=False,  # Hide y-axis labels
+                title=""  # Remove y-axis title
             )
         )
         
@@ -405,6 +409,7 @@ if top_contributors_pos and top_contributors_neg:
 
     else:
         st.warning("Scatter chart did not plot")  
+
 
 
     if not filtered_df.empty:
